@@ -1,0 +1,25 @@
+# Kubernetes commands
+
+k is aliased to kubectl in bash:
+
+ALIAS k ="kubectl"
+
+## Simple pod interactions
+
+k get pods                       : List all pods
+k get pod $NAME                  : Get a pod with name $NAME
+k edit pod $NAME                 : Edit a pod with name $NAME
+k delete pod $NAME               : Delete a pod with name $NAME
+k describe pod $NAME             : Show information about a pod with name $NAME
+
+## Create pod
+
+This command writes pod configuration from a dry-run example for nginx.
+
+k run nginx-yaml --image=nginx --dry-run=client -o yaml > nginx.yaml
+
+k create -f $FILENAME            : Creates pod config for given $FILENAME. Errors if resource exists. 
+k apply -f $FILENAME             : Ppplies pod config for given $FILENAME. Create resource if not exists.
+
+
+
