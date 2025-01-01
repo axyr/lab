@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: rng
+  name: rng
+spec:
+  containers:
+  - image: alpine
+    name: alpine
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh","-c"]
+    args: ["shuf -i 0-100 -n 1 >> /opt/number.out;"]
+    volumeMounts:
+    - mountPath: /opt
+      name: data-volume
+  volumes:
+  - name: data-volume
+    hostPath:
+      path: /Users/martijn/www/clients/martijn/lab/kubernetes/nginx-php/data
+      type: Directory

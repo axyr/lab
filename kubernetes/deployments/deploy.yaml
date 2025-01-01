@@ -17,11 +17,10 @@ spec:
       containers:
         - image: httpd:alpine3.19
           name: httpd
-          command: ["bin/bash", "-c"]
-          args: ["sleep 5; exit 1"]
+          command: [ "bin/bash", "-c" ]
+          args: [ "sleep 5; exit 1" ]
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: 1
-
