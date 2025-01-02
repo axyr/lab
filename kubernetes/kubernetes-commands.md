@@ -10,77 +10,210 @@ ALIAS k ="kubectl"
 
 ## Simple pod interactions
 
-k get pods                       : List all pods
-k get pod $NAME                  : Get a pod with name $NAME
-k edit pod $NAME                 : Edit a pod with name $NAME
-k delete pod $NAME               : Delete a pod with name $NAME
-k describe pod $NAME             : Show information about a pod with name $NAME
+List all pods
+```bash
+k get pods
+```
 
-k get pods -o wide               : Show a lot more information about pods
+Get a pod with name <name>
+```bash
+k get pod <name>
+```
+
+Edit a pod with name <name>
+```bash
+k edit pod <name>
+```
+
+Delete a pod with name <name>
+```bash
+k delete pod <name>
+```
+
+Show information about a pod with name <name>
+```bash
+k describe pod <name>
+```
+
+Show a lot more information about pods
+```bash
+k get pods -o wide
+```
 
 ## Create pod
 
 This command writes pod configuration from a dry-run example for nginx.
-
+```bash
 k run nginx-yaml --image=nginx --dry-run=client -o yaml > nginx.yaml
+```
 
-k create -f $FILENAME            : Creates pod config for given $FILENAME. Errors if resource exists.
-k apply -f $FILENAME             : Applies pod config for given $FILENAME. Create resource if not exists.
-k edit pod $POD                  : Edit a pod with name $POD
-k replace -f $FILENAME --force   : Replace and editted pod with changes in $FILENAME and ignore any warnings.
-k delete all --all               : Delete everything
+Creates pod config for given <filename>. Errors if resource exists.
+```bash
+k create -f <filename>
+```
+
+Applies pod config for given <filename>. Create resource if not exists.
+```bash
+k apply -f <filename>
+```
+
+Edit a pod with name <pod>
+```bash
+k edit pod <pod>
+```
+
+Replace and editted pod with changes in <filename> and ignore any warnings.
+```bash
+k replace -f <filename> --force
+```
+
+Delete everything
+```bash
+k delete all --all
+```
 
 ## Interacting with pods
 
-k exec -it $NAME -- /bin/bash    : Access a container $NAME with a bash shell
-CTRL+D                           : Exit a container. Alternative type exit + ENTER
-k exec $NAME -- date             : Execute the date command in container $NAME
-k exec -it nginx-storage -c busybox -- sh : open an interactive shell into a container busybox within a pod nginx-storage
-k exec $POD -- whoami            : Get the user that
+Access a container <name> with a bash shell
+```bash
+k exec -it <name> -- /bin/bash
+```
+
+Exit a container. Alternative type exit + ENTER
+```bash
+CTRL+D
+```
+
+Execute the date command in container <name>
+```bash
+k exec <name> -- date
+```
+
+Open an interactive shell into a container busybox within a pod nginx-storage
+```bash
+k exec -it nginx-storage -c busybox -- sh
+```
+
+Get the user that
+```bash
+k exec <pod> -- whoami
+```
 
 ## Deployments
 
-k create deploy test --image=httpd --replicas=3 : Create a deployment for an image with 3 replicas
+Create a deployment for an image with 3 replicas
+```bash
+k create deploy test --image=httpd --replicas=3
+```
 
-k get deployments.apps           : Show all deployments
-k edit deployments.apps $NAME    : Edit a deployment $NAME
-k describe deployments.apps $NAME: Show condensed information about a deployment $NAME
-k delete deployments.apps $NAME  : Delete a deployment $NAME
+Show all deployments
+```bash
+k get deployments.apps
+```
+
+Edit a deployment <name>
+```bash
+k edit deployments.apps <name>
+```
+
+Show condensed information about a deployment <name>
+```bash
+k describe deployments.apps <name>
+```
+
+Delete a deployment <name>
+```bash
+k delete deployments.apps <name>
+```
 
 ## Create a deployment
 
-This command create a deployment yaml file from a minimal example
-by using --dry-run and yaml formatting
+This command create a deployment yaml file from a minimal example by using --dry-run and yaml formatting
+```bash
+k create deploy <name> --image=httpd --replicas=3 --dry-run=client -o yaml > deploy.yaml
+```
 
-k create deploy $NAME --image=httpd --replicas=3 --dry-run=client -o yaml > deploy.yaml
+Creates a deployment from a deployment file
+```bash
+k apply -f deploy.yaml
+```
 
-k apply -f deploy.yaml           : Creates a deployment from a deployment file
+List all sets of pod replicates
+```bash
+k get replicasets.apps
+```
 
-k get replicasets.apps           : List all sets of pod replicates
-k describe replicasets.apps $NAME: Show infomdation about a replica.
+Show infomdation about a replica.
+```bash
+k describe replicasets.apps <name>
+```
 
-k get namespaces                 : Show all namespaces
-k create namespace $NAME         : Create a new namespace with name of $NAME
-k apply -f $FILENAME             : Apply the namespace file
-k apply -R -f $DIRNAME           : Apply all yaml files recursively in a directory $DIRNAME
+Show all namespaces
+```bash
+k get namespaces
+```
 
-k config set-context --current --namespace=$NAME : Set the default namespace to use to namespae $NAME
+Create a new namespace with name of <name>
+```bash
+k create namespace <name>
+```
 
-k port-forward pods/$NAME 9000   : Forward an external port to an internal portthe pod $POD is running under
+Apply the namespace file
+```bash
+k apply -f <filename>
+```
+
+Apply all yaml files recursively in a directory <dirname>
+```bash
+k apply -R -f <dirname>
+```
+
+Set the default namespace to use to namespae <name>
+```bash
+k config set-context --current --namespace=<name>
+```
+
+Forward an external port to an internal portthe pod <pod> is running under
+```bash
+k port-forward pods/<name> 9000
+```
 
 ## Taints and Tolerations
 
-k taint nodes $NAME key=value:NoSchedule  : Add a Taint to a Node
-k taint nodes $NAME key=value:NoSchedule- : Remove a Tain from Node
+Add a Taint to a Node
+```bash
+k taint nodes <name> key=value:NoSchedule
+```
+
+Remove a Tain from Node
+```bash
+k taint nodes <name> key=value:NoSchedule-
+```
 
 ## Node Selectors & Affinity
 
-k lavel nodes $NODE $LABELKEY:$LABELVALUE : A add a Label to a Node
+A add a Label to a Node
+```bash
+k lavel nodes <node> <labelkey>:<labelvalue>
+```
 
 ## Ingress
 
-k get ingress                    : Get all ingress 
+Get all ingress
+```bash
+k get ingress
+```
 
-k create ingress $NAME -n $NAMESPACE --rule=/$PATH=$SERVICE-NAME:$PORT --rule=/$OTHER=$ETC:$PORT
+Create ingress
+```bash
+k create ingress <name> -n <namespace> --rule=/<path>=<service-name>:<port> --rule=/<other>=<etc>:<port>
+```
 
 ## Network Policies
+
+## Debugging
+
+Run a temporary Pod with nginx and execute the curl command on ip <ip>:<port>
+```bash
+k run tmp --restart=Never --rm -i --image=nginx:alpine -- curl -m 5 <ip>:<port>
+```
