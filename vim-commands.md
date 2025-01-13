@@ -32,7 +32,7 @@ $            : move the cursor to the end of the line
 
 u            : undo last action
 U            : revert line to last state
-CRTL+R       : redu last action
+CRTL+R       : redo last action
 
 12yy         : copy(yank) 12 lines. p will paste the yanked lines.
 
@@ -67,6 +67,7 @@ CTRL+I       : move to the next position
 
 vi -O <file1> <file2> : open two files in split mode
 
+SHIFT+V               : select lines with arrows up and down, use < > to indent, use . to repeat action
 
 # Vim settings
 

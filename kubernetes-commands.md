@@ -8,6 +8,13 @@ k is aliased to kubectl in bash:
 
 ALIAS k ="kubectl"
 
+## Global interactions
+
+List all API resources and the short names
+```bash
+k api-resources 
+```
+
 ## Simple pod interactions
 
 List all pods
@@ -28,6 +35,8 @@ k edit pod <name>
 Delete a pod with name <name>
 ```bash
 k delete pod <name>
+# Fast delete alternative
+k delete pod <name> --grace-period 0 --force
 ```
 
 Show information about a pod with name <name>
@@ -216,4 +225,9 @@ k create ingress <name> -n <namespace> --rule=/<path>=<service-name>:<port> --ru
 Run a temporary Pod with nginx and execute the curl command on ip <ip>:<port>
 ```bash
 k run tmp --restart=Never --rm -i --image=nginx:alpine -- curl -m 5 <ip>:<port>
+```
+
+Run a temporary Pod with busybox and execute the wget command on ip <ip>:<port>
+```bash
+k run tmp --restart=Never --rm --image=busybox -i -- wget -O- <ip>:<port>
 ```
