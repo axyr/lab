@@ -2,12 +2,16 @@
 
 
 > Regular OSX terminal does not play well with all the keybindings.
-iTerm 2 does this a little bit better, but not everything works as expected.
+iTerm2 does this a little bit better, but not everything works as expected.
 
 Start tmux
 ```bash
 tmux 
 ```
+
+Start tmux by default when opening a iTerm2 terminal:
+Settings -> Profiles -> General:
+Send text at start: tmux attach -t init || tmux new -s init
 
 ## Sessions
 
@@ -34,6 +38,11 @@ CTRL+B d
 Attach to a tnux session
 ```bash
 tmux a -t <indexorname>
+```
+
+Kill all tmux sessions
+```bash
+tmux kill-server
 ```
 
 ## Panes
@@ -97,5 +106,19 @@ CTRL+B w
 # select window, hit x and confirm (y)es
 ```
 
+Copy paste
+This requires the following tmux.conf line:
+setw -g mode-keys vi
+
+```bash
+# Enter copy mode
+CTRL+B [
+# use arrows to navigate terminal
+# hit space to start selecting
+# use arrow keys to select text
+# hit enter
+# to paste text:
+CTRL+B ]
+```
 
 
